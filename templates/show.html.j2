@@ -1,0 +1,15 @@
+<html>
+<header>
+<style>
+</style>
+</header>
+<body>
+{% for episode in show %}
+<h1>
+<li> <a href="/episode?episode={{ episode[0] }}">{{ episode[1] }}</li>
+</h1>
+{% endfor %}
+<br />
+
+</body>
+</html>
