@@ -11,6 +11,27 @@ class Chia:
     def __init__(self):
         self.getMainPage()
 
+    def getLatest(self):
+        latest = requests.get("http://www.chia-anime.me")
+        episodes = re.findall(r'(box2-top.+\n.+\n.+\n.+\n.+\n.+\n.+)', latest.text)
+        lastrel = []
+        for episode in episodes:
+            show = []
+            url = re.findall(r'a href="([^"]+)', episode)
+            title = re.findall(r'title="([^"]+)', episode)
+            pic = re.findall(r'src="([^"]+)', episode)
+            if len(url) != 0:
+                show.append(url[0])
+            if len(title) != 0:
+                show.append(title[0])
+            if len(pic) != 0:
+                show.append(pic[0])
+            else:
+                show.append("")
+            lastrel.append(show)
+        return lastrel
+        
+
     
     def getMainPage(self):
         main = requests.get("http://www.chia-anime.me/index/")
@@ -24,7 +45,6 @@ class Chia:
                     res = ("<a id=\"" + link.get_text()[:1] + "\"</a>")
                     self.mainLinks.append(res)
                     res = ("<br> <br>" + link.get_text()[:1] + "<br> <br>")
-                    print(res)
                     self.mainLinks.append(res)
 
                 res = (link['href'], link.get_text())

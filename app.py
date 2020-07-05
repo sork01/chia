@@ -12,12 +12,11 @@ chia = Chia.Chia()
 
 @app.route("/", methods=['GET'])
 def getAnime():
-    return render_template('anime.html.j2', anime=chia.mainLinks)
+    return render_template('anime.html.j2', anime=chia.mainLinks, latest=chia.getLatest())
 
 @app.route('/show')
 def getShow():
     show = request.args.get('show')
-    print("här är show " + show)
     return render_template('show.html.j2', show=chia.getEpisodes(show))
 
 @app.route('/episode')
